@@ -106,3 +106,6 @@ venv.bak/
 .mypy_cache/
 
 .idea/
+telegramtoken.txt
+db.sqlite3
+.directory

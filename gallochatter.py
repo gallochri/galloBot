@@ -7,6 +7,7 @@
 import os
 import os.path
 import sys
+import chatterbot
 
 from chatterbot import ChatBot
 
@@ -21,32 +22,31 @@ class GalloChatter(object):
                 "chatterbot.logic.TimeLogicAdapter",
                 "chatterbot.logic.BestMatch"
             ],
-            trainer='chatterbot.trainers.ChatterBotCorpusTrainers'
+            trainer='chatterbot.trainers.ChatterBotCorpusTrainer'
         )
-        self.instdir = "/home/gallochri/dev/galloBot_env/lib/python3.4/site-packages/chatterbot_corpus/data/" \
-                       + self.language + "/"
+        self.instdir = os.path.dirname(chatterbot.__file__) + "_corpus/data/" + self.language + "/"
         self.localdir = os.path.abspath(os.path.dirname(sys.argv[0])) + "/lang/" + self.language + "/chatbotcorpus/"
 
     def train(self):
+        print("###Start training###")
         if self.checkdirnotempty(self.localdir):
-            print(self.localdir)
             self.chatbot.train(
                 self.localdir
             )
         elif self.checkdirnotempty(self.instdir):
-            print(self.instdir)
             self.chatbot.train(
                 self.instdir
             )
         else:
-            print("Using standard english corpus")
             self.chatbot.train("chatterbot.corpus.english.greetings")
+        print("Training folder set to:" + self.localdir)
 
     def reply(self, phrase=""):
         response = self.chatbot.get_response(phrase)
         return response
 
-    def checkdirnotempty(self, folder=""):
+    @staticmethod
+    def checkdirnotempty(folder=""):
         check = False
         if os.path.isdir(folder):
             entities = os.listdir(folder)

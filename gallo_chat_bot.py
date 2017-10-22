@@ -14,13 +14,13 @@ import sys
 import subprocess
 from gallochatter import GalloChatter
 
-telegramtoken = ''  # telegram bot token from BotFather
-checkuserid = 1  # enable users whitelist, so only certain people can talk with this bot
-usersfile = 'botusers.csv'  # the file where we store the list of users who can talk with bot
+telegramtoken = ''                  # telegram bot token from BotFather
+checkuserid = 1                     # enable users whitelist, so only certain people can talk with this bot
+usersfile = 'botusers.csv'          # the file where we store the list of users who can talk with bot
 attemptsfile = '/tmp/attempts.log'  # the file where we log denied accesses
-active = 1  # if set to 0 the bot will stop
+active = 1                          # if set to 0 the bot will stop
 
-language = "it-IT"
+language = "italian"
 
 chatter = GalloChatter(language)
 chatter.train()
