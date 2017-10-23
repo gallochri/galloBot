@@ -5,20 +5,20 @@
 #
 
 
-import time
-import random
 import datetime
-import telepot
-import os
 import sys
-import subprocess
+import time
+
+import os
+import telepot
+
 from gallochatter import GalloChatter
 
-telegramtoken = ''                  # telegram bot token from BotFather
-checkuserid = 1                     # enable users whitelist, so only certain people can talk with this bot
-usersfile = 'botusers.csv'          # the file where we store the list of users who can talk with bot
+telegramtoken = ''  # telegram bot token from BotFather
+checkuserid = 1  # enable users whitelist, so only certain people can talk with this bot
+usersfile = 'botusers.csv'  # the file where we store the list of users who can talk with bot
 attemptsfile = '/tmp/attempts.log'  # the file where we log denied accesses
-active = 1                          # if set to 0 the bot will stop
+active = 1  # if set to 0 the bot will stop
 
 language = "italian"
 
@@ -38,9 +38,9 @@ print(bot.getMe())
 def listusers():
     if not os.path.isfile(usersfile):
         return ''
-    text_file = open(usersfile, "r")
-    lines = text_file.read().split(',')
-    text_file.close()
+    auth_file = open(usersfile, "r")
+    lines = auth_file.read().split(',')
+    auth_file.close()
     del lines[-1]  # remove last element since it is blank
     return lines
 
@@ -52,9 +52,9 @@ def adduser(name):
         for usr in users:
             csv = csv + usr + ","
     csv = csv + name + ","
-    text_file = open(usersfile, "w")
-    text_file.write(csv)
-    text_file.close()
+    auth_file = open(usersfile, "w")
+    auth_file.write(csv)
+    auth_file.close()
 
 
 def deluser(name):
@@ -64,9 +64,9 @@ def deluser(name):
         for usr in users:
             if usr != name:
                 csv = csv + usr + ","
-    text_file = open(usersfile, "w")
-    text_file.write(csv)
-    text_file.close()
+    auth_file = open(usersfile, "w")
+    auth_file.write(csv)
+    auth_file.close()
 
 
 def handle(msg):
@@ -91,13 +91,13 @@ def handle(msg):
             if attemptsfile != '':
                 lines = ''
                 if os.path.isfile(attemptsfile):
-                    text_file = open(attemptsfile, "r")
-                    lines = text_file.read()
-                    text_file.close()
+                    auth_file = open(attemptsfile, "r")
+                    lines = auth_file.read()
+                    auth_file.close()
                 lines = lines + str(datetime.datetime.now()) + " --- UserdID: " + str(sender) + " DENIED \n"
-                text_file = open(attemptsfile, "w")
-                text_file.write(lines)
-                text_file.close()
+                auth_file = open(attemptsfile, "w")
+                auth_file.write(lines)
+                auth_file.close()
             return
 
     command = ''
@@ -113,14 +113,14 @@ def handle(msg):
         bot.sendMessage(chat_id, str(datetime.datetime.now()))
     elif '/adduser' in command:
         if len(command.split(' ')) > 1:
-            usrname = command.split(' ')[1]
-            adduser(usrname)
-            bot.sendMessage(chat_id, "User " + usrname + " added")
+            username = command.split(' ')[1]
+            adduser(username)
+            bot.sendMessage(chat_id, "User " + username + " added")
     elif '/deluser' in command:
         if len(command.split(' ')) > 1:
-            usrname = command.split(' ')[1]
-            deluser(usrname)
-            bot.sendMessage(chat_id, "User " + usrname + " deleted")
+            username = command.split(' ')[1]
+            deluser(username)
+            bot.sendMessage(chat_id, "User " + username + " deleted")
     elif command == '/help':
         bot.sendMessage(chat_id, "/adduser /deluser /time /exit")
     elif command == '/exit':
