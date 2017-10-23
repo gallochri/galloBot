@@ -13,22 +13,19 @@ import os
 import telepot
 
 from gallochatter import GalloChatter
+import settings
 
-telegramtoken = ''  # telegram bot token from BotFather
+telegramtoken = os.environ.get("bot_token")
+language = os.environ.get("language")
+
+#TODO
 checkuserid = 1  # enable users whitelist, so only certain people can talk with this bot
 usersfile = 'botusers.csv'  # the file where we store the list of users who can talk with bot
 attemptsfile = '/tmp/attempts.log'  # the file where we log denied accesses
 active = 1  # if set to 0 the bot will stop
 
-language = "italian"
-
 chatter = GalloChatter(language)
 chatter.train()
-
-if telegramtoken == '' and os.path.isfile("telegramtoken.txt"):
-    text_file = open("telegramtoken.txt", "r")
-    telegramtoken = text_file.read().replace("\n", "")
-    text_file.close()
 
 print("Connecting to Telegram...")
 bot = telepot.Bot(telegramtoken)
