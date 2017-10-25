@@ -2,7 +2,6 @@
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
 *$py.class
 
 # C extensions
@@ -88,7 +87,6 @@ celerybeat-schedule
 .venv
 .env/
 venv/
-.env/
 env.bak/
 venv.bak/
 
