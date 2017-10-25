@@ -18,10 +18,10 @@ import settings
 telegramtoken = os.environ.get("bot_token")
 language = os.environ.get("language")
 
-#TODO
+# TODO
 checkuserid = 1  # enable users whitelist, so only certain people can talk with this bot
 usersfile = 'botusers.csv'  # the file where we store the list of users who can talk with bot
-attemptsfile = '/tmp/attempts.log'  # the file where we log denied accesses
+attemptsfile = 'attempts.log'  # the file where we log denied accesses
 active = 1  # if set to 0 the bot will stop
 
 chatter = GalloChatter(language)
@@ -34,7 +34,7 @@ print(bot.getMe())
 
 def listusers():
     if not os.path.isfile(usersfile):
-        return ''
+        return 'No user file'
     auth_file = open(usersfile, "r")
     lines = auth_file.read().split(',')
     auth_file.close()
@@ -72,7 +72,9 @@ def handle(msg):
     global language
 
     chat_id = msg['chat']['id']
-    sender = msg['from']['id']
+    sender_id = msg['from']['id']
+    sender_first_name = msg['from']['first_name']
+    sender_last_name = msg['from']['last_name']
 
     users = listusers()
 
@@ -80,10 +82,10 @@ def handle(msg):
         verified = 0
         if users != "":
             for usr in users:
-                if str(sender) == usr:
+                if str(sender_id) == usr:
                     verified = 1
         if verified == 0:
-            bot.sendMessage(chat_id, "I don't talk with strangers, dear " + str(sender))
+            bot.sendMessage(chat_id, "I don't talk with strangers, dear " + str(sender_first_name))
             # write this user in the list of attempted accesses
             if attemptsfile != '':
                 lines = ''
@@ -91,7 +93,8 @@ def handle(msg):
                     auth_file = open(attemptsfile, "r")
                     lines = auth_file.read()
                     auth_file.close()
-                lines = lines + str(datetime.datetime.now()) + " --- UserdID: " + str(sender) + " DENIED \n"
+                lines = lines + str(datetime.datetime.now()) + " --- User ID: " + str(sender_id) + " Name: " + \
+                        str(sender_first_name) + " " + str(sender_last_name) + " DENIED \n"
                 auth_file = open(attemptsfile, "w")
                 auth_file.write(lines)
                 auth_file.close()
