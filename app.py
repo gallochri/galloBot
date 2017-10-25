@@ -8,6 +8,7 @@
 import datetime
 import sys
 import time
+import csv
 
 import os
 import telepot
@@ -35,11 +36,16 @@ print(bot.getMe())
 def listusers():
     if not os.path.isfile(usersfile):
         return 'No user file'
-    auth_file = open(usersfile, "r")
-    lines = auth_file.read().split(',')
-    auth_file.close()
-    del lines[-1]  # remove last element since it is blank
-    return lines
+    with open(usersfile) as csvfile:
+        reader = csv.DictReader(csvfile)
+        print("Authorized users list:")
+        for row in reader:
+            print(row['ID'], row['Username'])
+    # auth_file = open(usersfile, "r")
+    # lines = auth_file.read().split(',')
+    # auth_file.close()
+    # del lines[-1]  # remove last element since it is blank
+    # return lines
 
 
 def adduser(name):
@@ -76,13 +82,12 @@ def handle(msg):
     sender_first_name = msg['from']['first_name']
     sender_last_name = msg['from']['last_name']
 
-    users = listusers()
-
     if checkuserid == 1:
         verified = 0
-        if users != "":
-            for usr in users:
-                if str(sender_id) == usr:
+        with open(usersfile) as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                if str(sender_id) == row['ID']:
                     verified = 1
         if verified == 0:
             bot.sendMessage(chat_id, "I don't talk with strangers, dear " + str(sender_first_name))
