@@ -1,0 +1,12 @@
+#python-dotenv file enviroment, set enviroment vars and rename file to .env
+bot_token = <telegram bot token>
+language = <language>
+
+#Database config
+db_user = <database username>
+db_pwd = <database password>
+db_cluster = <database cluster name>
+db_port = <database port>
+replicaset = <replicaset name>
+
+database_uri = 'mongodb://${db_user}:${db_pwd}@${db_cluster}:${db_port}/test?ssl=true&replicaSet=${replicaset}&authSource=admin'

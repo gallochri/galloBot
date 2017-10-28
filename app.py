@@ -127,11 +127,13 @@ def handle(msg):
             deluser(username)
             bot.sendMessage(chat_id, "User " + username + " deleted")
     elif command == '/help':
-        bot.sendMessage(chat_id, "/adduser /deluser /time /exit")
+        bot.sendMessage(chat_id, "/listusers /adduser /deluser /time /exit")
     elif command == '/exit':
         global active
         active = False
         bot.sendMessage(chat_id, "The bot will shutdown in 10 seconds")
+    elif command == '/listusers':
+        listusers()
     elif command != '':
         answer = chatter.reply(command)
         bot.sendMessage(chat_id, str(answer))
