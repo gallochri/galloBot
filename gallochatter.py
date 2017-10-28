@@ -15,7 +15,6 @@ from chatterbot import ChatBot
 class GalloChatter(object):
     def __init__(self, lang="english"):
         self.db_uri = os.environ.get('database_uri')
-        print(self.db_uri)
         self.language = lang
         self.chatbot = ChatBot(
             'Gallo',

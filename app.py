@@ -33,21 +33,18 @@ bot = telepot.Bot(telegramtoken)
 print(bot.getMe())
 
 
-def listusers():
+def listusers(chat_id):
+    userlist = ""
     if not os.path.isfile(usersfile):
         return 'No user file'
     with open(usersfile) as csvfile:
         reader = csv.DictReader(csvfile)
-        print("Authorized users list:")
+        bot.sendMessage(chat_id, "Authorized users (ID-username:")
         for row in reader:
-            print(row['ID'], row['Username'])
-    # auth_file = open(usersfile, "r")
-    # lines = auth_file.read().split(',')
-    # auth_file.close()
-    # del lines[-1]  # remove last element since it is blank
-    # return lines
+            userlist = userlist + row['ID'] + " - " + row['Username'] + "\n"
+        bot.sendMessage(chat_id, userlist)
 
-
+#TODO
 def adduser(name):
     csv = ""
     users = listusers()
@@ -59,7 +56,7 @@ def adduser(name):
     auth_file.write(csv)
     auth_file.close()
 
-
+#TODO
 def deluser(name):
     csv = ""
     users = listusers()
@@ -133,7 +130,7 @@ def handle(msg):
         active = False
         bot.sendMessage(chat_id, "The bot will shutdown in 10 seconds")
     elif command == '/listusers':
-        listusers()
+        listusers(chat_id)
     elif command != '':
         answer = chatter.reply(command)
         bot.sendMessage(chat_id, str(answer))
