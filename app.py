@@ -77,7 +77,7 @@ def handle(msg):
     chat_id = msg['chat']['id']
     sender_id = msg['from']['id']
     sender_first_name = msg['from']['first_name']
-    sender_last_name = msg['from']['last_name']
+#    sender_last_name = msg['from']['last_name']
 
     if checkuserid == 1:
         verified = 0
@@ -96,7 +96,7 @@ def handle(msg):
                     lines = auth_file.read()
                     auth_file.close()
                 lines = lines + str(datetime.datetime.now()) + " --- User ID: " + str(sender_id) + " Name: " + \
-                        str(sender_first_name) + " " + str(sender_last_name) + " DENIED \n"
+                        str(sender_first_name) + " DENIED \n"
                 auth_file = open(attemptsfile, "w")
                 auth_file.write(lines)
                 auth_file.close()
@@ -111,7 +111,7 @@ def handle(msg):
     except:
         print("No text in this message")
 
-    if command == '/time':
+    if command == '/time'or command == '/time@gallo_chat_bot':
         bot.sendMessage(chat_id, str(datetime.datetime.now()))
     elif '/adduser' in command:
         if len(command.split(' ')) > 1:
