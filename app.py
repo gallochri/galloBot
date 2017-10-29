@@ -129,7 +129,7 @@ def handle(msg):
         global active
         active = False
         bot.sendMessage(chat_id, "The bot will shutdown in 10 seconds")
-    elif command == '/listusers':
+    elif command == '/listusers' or '/listusers@gallo_chat_bot':
         listusers(chat_id)
     elif command != '':
         answer = chatter.reply(command)
