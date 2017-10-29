@@ -39,7 +39,7 @@ def listusers(chat_id):
         return 'No user file'
     with open(usersfile) as csvfile:
         reader = csv.DictReader(csvfile)
-        bot.sendMessage(chat_id, "Authorized users (ID-username:")
+        bot.sendMessage(chat_id, "Authorized users (ID-username):")
         for row in reader:
             userlist = userlist + row['ID'] + " - " + row['Username'] + "\n"
         bot.sendMessage(chat_id, userlist)
@@ -129,7 +129,7 @@ def handle(msg):
         global active
         active = False
         bot.sendMessage(chat_id, "The bot will shutdown in 10 seconds")
-    elif command == '/listusers':
+    elif command == '/listusers' or command == '/listusers@gallo_chat_bot':
         listusers(chat_id)
     elif command != '':
         answer = chatter.reply(command)
