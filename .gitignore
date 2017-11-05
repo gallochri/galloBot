@@ -107,3 +107,5 @@ venv.bak/
 .idea/
 db.sqlite3
 .directory
+.env_locale
+.env_remote
