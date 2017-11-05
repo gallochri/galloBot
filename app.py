@@ -44,7 +44,8 @@ def listusers(chat_id):
             userlist = userlist + row['ID'] + " - " + row['Username'] + "\n"
         bot.sendMessage(chat_id, userlist)
 
-#TODO
+
+# TODO
 def adduser(name):
     csv = ""
     users = listusers()
@@ -56,7 +57,8 @@ def adduser(name):
     auth_file.write(csv)
     auth_file.close()
 
-#TODO
+
+# TODO
 def deluser(name):
     csv = ""
     users = listusers()
@@ -77,7 +79,7 @@ def handle(msg):
     chat_id = msg['chat']['id']
     sender_id = msg['from']['id']
     sender_first_name = msg['from']['first_name']
-#    sender_last_name = msg['from']['last_name']
+    #    sender_last_name = msg['from']['last_name']
 
     if checkuserid == 1:
         verified = 0
@@ -111,7 +113,7 @@ def handle(msg):
     except:
         print("No text in this message")
 
-    if command == '/time'or command == '/time@gallo_chat_bot':
+    if command == '/time' or command == '/time@gallo_chat_bot':
         bot.sendMessage(chat_id, str(datetime.datetime.now()))
     elif '/adduser' in command:
         if len(command.split(' ')) > 1:
