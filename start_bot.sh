@@ -1,6 +1,6 @@
 #!/bin/sh -xv
-GIT_REPO=$HOME/gogs-repositories/gallochri/gallobot.git
-GIT_CLONE=$HOME/bot/gallobot
+GIT_REPO=https://git.gallochri.com/gallochri/galloBot.git
+GIT_CLONE=$HOME/bot/galloBot
 PYTHON_ENV=$HOME/bot/gallobot_env
 APP=${GIT_CLONE}/app.py
 
